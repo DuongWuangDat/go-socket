@@ -5,9 +5,12 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"os"
+	"strconv"
 )
 
 var (
+	//roomID  []int
 	conns   []net.Conn
 	connCh  = make(chan net.Conn)
 	closeCh = make(chan net.Conn)
@@ -15,7 +18,21 @@ var (
 )
 
 func main() {
-	sever, err := net.Listen("tcp", ":3000")
+	var port string
+	for {
+		fmt.Println("Add new room: ")
+		scanner := bufio.NewScanner(os.Stdin)
+		scanner.Scan()
+		x, erro := strconv.Atoi(scanner.Text())
+		if erro == nil {
+			//	roomID = append(roomID, x)
+			port = ":300" + strconv.Itoa(x)
+			break
+		}
+
+	}
+
+	sever, err := net.Listen("tcp", port)
 	if err != nil {
 		log.Fatal(err)
 	}

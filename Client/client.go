@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"strconv"
 
 	"log"
 	"net"
@@ -10,7 +11,19 @@ import (
 )
 
 func main() {
-	connection, err := net.Dial("tcp", ":3000")
+	var port string
+	for {
+		fmt.Println("Room: ")
+		scanner := bufio.NewScanner(os.Stdin)
+		scanner.Scan()
+		x, erro := strconv.Atoi(scanner.Text())
+		if erro == nil {
+			port = ":300" + strconv.Itoa(x)
+			break
+		}
+
+	}
+	connection, err := net.Dial("tcp", port)
 	if err != nil {
 		log.Fatal(err)
 	}
